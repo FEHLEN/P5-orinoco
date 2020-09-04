@@ -1,25 +1,60 @@
 <!doctype html>
 <html lang="fr">
     <head>
-        <meta charset="utf-8">
+        <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Votre récapitulatif de commande"/>
         <link rel="stylesheet" type="text/css" href="style.css">
+
         <title>Orinoco page produit ours brun naturel</title>
 
     </head>
-     <body>
-        <header><img src="../image-marque.PNG" alt="image de la marque Orinoco"/>
-            <!-- mettre le script pour prompt demander combien d'article entrer un nombre entre 1 et 10 ?-->
+    <body>
+        <header>
+            <img src="../image-marque.PNG" alt="image de la marque Orinoco"/>
+            <h1>Ours en peluche faits à la main</h1>
+            <nav>
+                <a href="../index.html"><h2>Retour</h2></a>   
+            </nav>
+            <h2>Votre commande</h2>
         </header>
-        <!-- mettre le script fonction qui calcule le total aller chercher le prix-->
-        <!-- mettre le script pour prompt voulez vous commander oui ou non ? si non retour page d'accueil-->
-
-        <!-- faire le formulaire, qui se met à jour si plusieurs articles différents-->
-
-        <!-- à la validation envoyer la commande par post-->
-
-        <!-- retour de l'id de commande et confirmation-->
-
+        <main class="commande">
+            <div id="panier-resume">
+                <p id="empty_panier">Votre panier est vide</p>
+            </div>
+            <div class="form">
+                <form method="post" name="panier">
+                    <fieldset>
+                        <legend>Civilité</legend>
+                            <label for="formNom">Nom</label></br>
+                            <input type="text" id="formNom">
+                            <label for="formPrenom" class="right-inline">Prénom</label></br>
+                            <input type="text" id="formPrenom">
+                    </fieldset> 
+                    <fieldset>
+                        <legend>Coordonnées</legend>
+                            <label for="formMail">E-mail</label></br>
+                            <input type="email" id="formMail">
+                            <label for="formAdresse">Adresse</label></br>
+                            <input type="text" id="formAdresse">
+                            <label for="formVille">Ville</label></br>
+                            <input type="text" id="formVille">
+                    </fieldset> 
+                    <input type="submit" value="Je valide mon panier et mes informations" id="sendPost">
+                </form>
+            </div>
+        </main>
+        <footer>
+            <nav>
+                <ul>
+                    <li><a href="../index.html"><h2>Retour accueil</h2></a></li>
+                </ul>
+            </nav>
+        </footer>
+        <script src="teddy.js"></script>
+        <script>addition()</script>
+        <script>validCommande()</script>
     </body>
+
 
 </html>

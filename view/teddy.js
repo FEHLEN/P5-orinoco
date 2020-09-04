@@ -1,128 +1,49 @@
 
-// method get generique pour demander des données
-//************************************************ */
-// Prend en paramètres l'URL cible et la fonction callback appelée en cas de succès
-function ajaxGet(url, callback) {
-    console.log('ajaxGet');
-    var req = new XMLHttpRequest();
-    req.open("GET", url);
-    req.addEventListener("load", function () {
-        if (req.status >= 200 && req.status < 400) {
-            // Appelle la fonction callback en lui passant la réponse de la requête
-            callback(JSON.parse(req.responseText));
-        } else {
-            console.error(req.status + " " + req.statusText + " " + url);
-        }
-    });
-    req.addEventListener("error", function () {
-        console.error("Erreur réseau avec l'URL " + url);
-    });
-    req.send(null);
-  }
-  
-  //methode post generique pour transmettre des données
-function ajaxPost(url, options, callback) {
-    var req = new XMLHttpRequest();
-    req.open("POST", url);
-  
-    var postOptions;
-    if (typeof options === 'objet'){
-      // envoyer du json {plouf:lolo, name : ted ....}
-      req.setRequestHeader ('content-type','application/json');
-      postOptions = JSON.stringify(options);
-  
-    }else if (typeof options === "array"){  //renvoi sous forme de tableau
-  
-    }else{
-      postOptions = null;
-    }
-    req.addEventListener("load", function () {
-        if (req.status >= 200 && req.status < 400) {
-            // Appelle la fonction callback en lui passant la réponse de la requête
-            callback(req.responseText);
-        } else {
-            console.error(req.status + " " + req.statusText + " " + url);
-        }
-    });
-    req.addEventListener("error", function () {
-        console.error("Erreur réseau avec l'URL " + url);
-    });
-    req.send(postOptions);
-}
-
-
-//*********************
-// Fonctions qui permettre d'afficher les pages l'une après l'autre
-//*********************
-
-
-function switchView(view){
-    switch(view){
-        case "list":
-            document.getElementById('Produit').style.display = "none";
-            document.getElementById('Panier').style.display = "none";
-            document.getElementById('Liste').style.display = "block";
-            document.getElementById('Confirmation').style.display = "none";
-
-            break;
-        case "produit":
-            document.getElementById('Produit').style.display = "block";
-            document.getElementById('Panier').style.display = "none";
-            document.getElementById('Liste').style.display = "none";
-            document.getElementById('Confirmation').style.display = "none";
-            break;
-        case "commande":
-            document.getElementById('Produit').style.display = "none";
-            document.getElementById('Panier').style.display = "block";
-            document.getElementById('Liste').style.display = "none";
-            document.getElementById('Confirmation').style.display = "none";
-            break;
-        case "confirmation":
-            document.getElementById('Produit').style.display = "none";
-            document.getElementById('Panier').style.display = "none";
-            document.getElementById('Liste').style.display = "none";
-            document.getElementById('Confirmation').style.display = "block";
-            break;
-
-    }
-}
-
-
-if (localStorage.getItem("userPanier")) {
+const APIURL = "http://localhost:3000/api/teddies/";
+let idProduit ="";
+let commande = [];
+let contact;
+if (localStorage.getItem("userBasket")) {
     console.log(
       "Administration : le panier de l'utilisateur existe déjà dans le localStorage"
     );
-} else {
+  } else {
     console.log(
       "Administration : Le panier n'existe pas, il va être créer et envoyer dans le localStorage"
     );
     let panierInit = [];
-    localStorage.setItem("userPanier", JSON.stringify(panierInit));
-}
+    localStorage.setItem("userBasket", JSON.stringify(panierInit));
+  }
   
+  let userBasket = JSON.parse(localStorage.getItem("userBasket"));
 
-let idProduit ="";
-let commande = [];
- 
-/*modèle de la structure pour connaître les keys et value
-[
-    {"colors": ["Tan","Chocolate","Black","White"],"_id": "5be9c8541c9d440000665243","name": "Norbert","price": 2900,"imageUrl": "http://localhost:3000/images/teddy_1.jpg","description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."},
-    {"colors": ["Pale brown","Dark brown","White"],"_id": "5beaa8bf1c9d440000a57d94","name": "Arnold","price": 3900,"imageUrl": "http://localhost:3000/images/teddy_2.jpg","description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."},
-    {"colors": ["Brown"],"_id": "5beaaa8f1c9d440000a57d95","name": "Lenny and Carl","price": 5900,"description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.","imageUrl": "http://localhost:3000/images/teddy_3.jpg"},
-    {"colors": ["Brown","Blue","Pink"],"_id": "5beaabe91c9d440000a57d96","name": "Gustav","price": 4500,"imageUrl": "http://localhost:3000/images/teddy_4.jpg","description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."},
-    {"colors": ["Beige","Tan","Chocolate"],"_id": "5beaacd41c9d440000a57d97","name": "Garfunkel","price": 5500,"description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.","imageUrl": "http://localhost:3000/images/teddy_5.jpg"}
-]
-*/
+function requeteAll() {
+    return new Promise((resolve) => {
+      let request = new XMLHttpRequest();
+      request.onreadystatechange = function () {
+        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+          resolve(JSON.parse(this.responseText));
+          console.log("Connection faite");
+          // Supprimer le message d'erreur si l'appel est réussi
+          error = document.getElementById("erreur");
+          // Supprimer le message d'erreur s'il existe
+          if (error) {
+            error.remove();
+          }
+        } else {
+          console.log("ERREUR à la connection API");
+        }
+      };
+      request.open("GET", APIURL + idProduit);
+      request.send();
+    });
+}
 
 
-//********************************
-// Constitution de la page accueil
-//********************************
-
-function allTeddy(response){
-   
+async function allProduct(){
+    const response = await requeteAll();
     console.log(response);
-    switchView("list");
+    //Placer la structure
     let listProduct = document.createElement("section");
     listProduct.setAttribute("id", "list-articles");
     let main = document.getElementById("Liste");
@@ -150,7 +71,7 @@ function allTeddy(response){
         blocBas.setAttribute("class", "bloc_bas");
         prix.setAttribute("class", "price_article");
         lienArticle.setAttribute("class", "selection_article");
-        lienArticle.setAttribute("button" + produit._id);
+        lienArticle.setAttribute("href", "produit.html?id=" , + produit._id);
         // Ordre des éléments créés
         listProduct.appendChild(bloc);
         bloc.appendChild(blocPhoto);
@@ -167,51 +88,58 @@ function allTeddy(response){
         nomArticle.textContent = produit.name;
         description.textContent = produit.description;
         prix.textContent = produit.price / 100 + ",00€";
-        lienArticle.textContent = "Découvrir";   
-
-})
+        lienArticle.textContent = "Détails";   
+    })
 }
-ajaxGet("http://localhost:3000/api/teddies/"+idProduit, allTeddy);
-
-btn.addEventListener('click',function oneTeddy(produitSelect){
-
-    console.log("ourson choisi"+produitSelect.name);})
-
-/*
-    switchView("produit");
-    document.getElementById("img_product")
+//*******************************
+//Constitution de la page produit
+//*******************************
+function oneProduit(){
+    idProduit = location.search.substring(4); //recherche quatrième caratère après le ?
+    const produitSelect = await requeteAll();
+    console.log=(produitSelect_id)
+    //remplir les contenants
+    document.getElementById("img_produit")
     document.setAttribute("src", produitSelect.imageUrl);
-    document.getElementById("name_product").innerHTML = produitSelect.name;
-    document.getElementById("description_product").innerHTML =
+    document.getElementById("nom_produit").innerHTML = produitSelect.name;
+    document.getElementById("description_produit").innerHTML =
     produitSelect.description;
-    document.getElementById("price_product").innerHTML =
+    document.getElementById("prix_produit").innerHTML =
     produitSelect.price / 100 + ",00€";
+    //liste option pour les couleurs
+    produitSelect.varnish.forEach((couleurs) => {
+    let optionProduit = document.createElement("option");
+    document
+      .getElementById("option_selection")
+      .appendChild(optionProduit).innerHTML = couleurs;
+    });
 
-    var select = document.getElementById('TeddyColors');
-    var length = select.options.length;
-    for (i = length-1; i >= 0; i--) {
-    select.options[i] = null;
-    }
-    for(var i in response.colors){
-        // Creer un element OPTION
-        var option = document.createElement('option');
-        option.innerText = produitSelect.colors[i];
-        document.getElementById('TeddyColors').appendChild(option);
-    }
-
-});  
-
-ajaxGet("http://localhost:3000/api/teddies/"+idProduit, oneTeddy);
- 
-
+};  
 //***************************************
 // Fonction interraction avec le visiteur
 //***************************************
+function addProduit() {
+    //Au clic le produit est mis dans le panier
+    let inputBuy = document.getElementById("add_produit");
+    inputBuy.addEventListener("click", async function () {
+        const commande = await requeteAll();
+        userBasket.push(commande);
+        localStorage.setItem("userBasket", JSON.stringify(userBasket));
+        console.log("Le nouveau produit a été ajouté au panier");
+        // Notifier l'utilisateur de l'ajout au panier
+        setTimeout(function () {
+          document.getElementById("add_done").textContent =
+            "Vous avez ajouté ce produit à votre panier !";
+        }, 500);
+        function add_done_remove() {
+          document.getElementById("add_done").textContent = "";
+        }
+        window.setTimeout(add_done_remove, 2000);
+      });
+}
 
 
 
-
-//constitution de la page produit
 
 /*
 // mettre le menu deroulant à zero pour supprimer les enfants
@@ -228,12 +156,6 @@ ajaxGet("http://localhost:3000/api/teddies/"+idProduit, oneTeddy);
         document.getElementById('TeddyColors').appendChild(option);
     }
 
-
-
-//**********A faire un bouton commander si oui faire un bouton quantité et mettre dans le tableau panier
-//**********si non retour à la page list afficher la page liste et cacher les autres
-
-/*
 //Stockage des articles commandés
 function addToCart(id, name, quantité,prix){
     var teddyCart = localStorage.getItem('teddyCart');

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Page produit ours Orinoco</title>
+    <meta name="description" content="Découvrez en détail nos ours Orinoco."/>
+</head>
+<body>
+    <header> 
+        <img src="image-marque.PNG" alt="image de la marque Orinoco"/>
+        <nav>
+            <a href="../index.html"><h2>Retour</h2></a>
+            <ul>
+                <li><a href="panier.html"><img src="images/icon-basket.png" alt="symbole-panier"></a></li>
+            </ul>
+        </nav> 
+        <!--mettre un icone panier et un icone retour-->
+        <h1>Ours en peluche faits à la main</h1>
+
+    </header>
+   
+    <p id="add_done"></p>
+    <main id="main">
+        <section id="produit">
+            <div id="ours en peluche">
+                <img src="#" id="img_produit" alt="Photo du produit"> <!--tag-->
+            </div>
+            <div id="description">
+                <h3 id="nom_produit"></h3>
+                <p id="description_produit"></p>
+                <label>Choisir une couleur</label>
+                <select name="option" id="option_selection"> <!--liste déroulante couleurs-->
+                </select>
+                <p id="prix_produit"></p>
+                <button id="add_produit">Ajouter au panier</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        
+        <p>Venez visitez nos autres sites :</p>
+
+        <div class="sites">
+            <a href= ""><h3>Oribook</h3></a>
+            <a href= ""><h4>Oritextil</h4></a>
+        </div>
+
+       
+        
+    
+    </footer>   
+    <script src = "teddy.js"></script> 
+    <script>oneProduit()</script>
+    <script>addProduit()</script>
+</body>
+</html>

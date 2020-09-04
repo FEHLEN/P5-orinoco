@@ -10,6 +10,28 @@ header{
 header img{
     width: 100%;
 }
+nav{
+   position: absolute;
+   right:20px;
+   top:20px; 
+}
+nav img{
+    margin-right: 20px;
+    border:2px solid rgb(161, 123, 123);
+    border-radius: 15px;
+}
+nav a{
+    text-decoration:none;
+    padding:3px;
+}
+nav h2{
+    font-size:2rem;
+    border:2px solid rgb(161, 123, 123);
+    border-radius: 15px;
+    color :rgb(161, 123, 123);
+    text-align: center;
+}
+
 
 
 .article{
@@ -35,7 +57,16 @@ header img{
     font-size: 2rem;
     padding-top: 5%;
 }
-a{
+.bloc_bas a{
+    background-color:rgb(161, 123, 123);
+    padding:2%;
+    color:black;
+    font-size: 2rem;
+    border-radius: 15px;
+    padding:2%;
+    text-decoration:none;
+}
+footer a{
     text-decoration: none;
     color:black;
     font-size:1.7rem;
