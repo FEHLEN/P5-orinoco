@@ -1,3 +1,4 @@
+/*toutes les pages*/
 body{
     display: flex;
     flex-direction: column;
@@ -10,54 +11,60 @@ header{
 header img{
     width: 100%;
 }
+footer{
+    width: 80%;
+    margin:auto;
+}
+/*page accueil*/
 nav{
    position: absolute;
    right:20px;
    top:20px; 
+   width: 20%;
 }
 nav img{
     margin-right: 20px;
     border:2px solid rgb(161, 123, 123);
     border-radius: 15px;
+    width: 20%;
 }
 nav a{
     text-decoration:none;
     padding:3px;
 }
-nav h2{
+h2{
     font-size:2rem;
-    border:2px solid rgb(161, 123, 123);
-    border-radius: 15px;
-    color :rgb(161, 123, 123);
+    color :rgb(129, 93, 93);
     text-align: center;
+    margin-bottom: 5%;
 }
-
-
-
+h1{
+    text-align:center;
+    color:rgb(161, 123, 123);
+    border-radius: 15px;
+    font-weight: bold;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
 .article{
     display: flex;
     flex-direction: row;
     border: 2px solid rgb(161, 123, 123);
+    background-color:rgb(204, 197, 197);
     margin-bottom: 5%;
 }
 .bloc_description{
     padding-left: 3%;
     padding-right: 3%;
-    padding-top: 10%;
 }
-.bloc_haut h2{
-    font-weight: 2rem;
+.name_article{
     text-align: center;
-    background-color: rgb(161, 123, 123);
+    font-weight: bold;
+    border:3px solid rgb(161, 123, 123);
     border-radius: 15px;
     padding:2%;
 }
-.bloc_bas p{
-    text-align: center;
-    font-size: 2rem;
-    padding-top: 5%;
-}
-.bloc_bas a{
+.bloc_droit a{
     background-color:rgb(161, 123, 123);
     padding:2%;
     color:black;
@@ -66,34 +73,17 @@ nav h2{
     padding:2%;
     text-decoration:none;
 }
-footer a{
-    text-decoration: none;
-    color:black;
-    font-size:1.7rem;
-    background-color:rgb(161, 123, 123);
-    padding:2%;
-    border-radius: 15px;
+.bloc_droit p{
+    font-size: 3rem;
 }
 #Liste{
     width:100% ;
     margin:auto;
     margin-bottom: 3%;
 }
-#Liste img{
-    width: 765px;
-    height: 600px;
-}
-
-h1{
-    text-align:center;
-    color:rgb(161, 123, 123);
-    font-weight: bold;
-}
-
-
-footer{
-    width: 80%;
-    margin:auto;
+.img_article{
+    width: 500px;
+    height: 400px;
 }
 footer p{
     text-align: center;
@@ -104,12 +94,79 @@ footer p{
     padding-bottom: 1%;
     border: 3px solid rgb(161, 123, 123);
 } 
-footer a{
+.sites a{
     font-size: 1.5rem;
     text-decoration: none;
-}
+    color:black;
+    font-size:1.7rem;
+    background-color:rgb(161, 123, 123);
+    padding:2%;
+    border-radius: 15px;
+    }
 .sites{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    margin-bottom: 5%;
+}
+.sites h3{
+    margin:0px;
+    text-align:center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+.sites h4{
+    margin:0px;
+    padding:0px;
+    text-align:center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+/*page produit*/
+nav h2{
+    border:2px solid rgb(129, 93, 93);
+    width: 50%;
+    height: 50px;
+    border-radius:25%;
+}
+#description{
+    padding-left: 2%;
+    padding-right: 2%;
+}
+#description p{
+    font-size: 1.7rem;
+}
+h3{
+    text-align:center;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 5%;
+    margin-bottom: 5%; 
+}
+#photo img{
+    width: 500px;
+    height: 400px;
+
+}
+#product{
+    display:flex;
+    flex-direction: row;
+}
+#name_product{
+    border:3px solid rgb(161, 123, 123);
+    border-radius: 15px;
+    padding:2%;
+}
+#add_product{
+    width: 20%;
+    height: 40px;
+}
+.retour{
+    border:3px solid rgb(161, 123, 123);
+    border-radius: 15px; 
+}
+.retour a{
+    width: 25%;
+    text-decoration: none;
+    color : rgb(129, 93, 93);
 }
