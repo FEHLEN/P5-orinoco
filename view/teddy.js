@@ -109,18 +109,22 @@ async function productDetails() {
     produitSelected.description;
   document.getElementById("price_product").innerHTML =
     produitSelected.price / 100 + ",00€";
-    console.log(produitSelected.colors);
-
-  document.getElementById("colors").innerHTML = produitSelected.colors;
-  
-  
-
+  console.log(produitSelected.colors);  
+  var select = document.getElementById("colorsList");
+    var length = select.options.length;
+    for (i = length-1; i >= 0; i--) {
+        select.options[i] = null;
+    }
+  for(var i in produitSelected.colors){
+      // Creer un element OPTION
+    var option = document.createElement('option');
+    option.innerHTML = produitSelected.colors[i];
+      // + définition valeur etc....
+  document.getElementById("colorsList").appendChild(option);}
 }
-
-
-
+ 
 function addProduct() {
-  // Mettre le produit dans le panier au clic
+  // Le produit est mis dans le panier au clic
   let inputBuy = document.getElementById("add_product");
   inputBuy.addEventListener("click", async function () {
     const produits = await getProducts();
@@ -139,234 +143,3 @@ function addProduct() {
     window.setTimeout(add_done_remove, 2000);
   });
 }
-
-function addition() {
-  // Vérifier si un produit est dans le panier
-  if (JSON.parse(localStorage.getItem("userBasket")).length > 0) {
-    // S'il n'est pas vide supprimer le message et créer le tableau récapitulatif
-    document.getElementById("empty_basket").remove();
-
-    // Créer la structure du tableau
-    let facture = document.createElement("table");
-    let ligneTableau = document.createElement("tr");
-    let colonneNom = document.createElement("th");
-    let colonnePrixUnitaire = document.createElement("th");
-    let ligneTotal = document.createElement("tr");
-    let colonneRefTotal = document.createElement("th");
-    let colonnePrixPaye = document.createElement("td");
-
-    // Placer la structure dans la page et le contenu des entêtes
-    let factureSection = document.getElementById("basket-resume");
-    factureSection.appendChild(facture);
-    facture.appendChild(ligneTableau);
-    ligneTableau.appendChild(colonneNom);
-    colonneNom.textContent = "Nom du produit";
-    ligneTableau.appendChild(colonnePrixUnitaire);
-    colonnePrixUnitaire.textContent = "Prix du produit";
-
-    // Pour chaque produit du panier, créer une ligne avec le nom et le prix
-
-    // Init de l'incrémentation de l'id des lignes pour chaque produit
-    let i = 0;
-
-    JSON.parse(localStorage.getItem("userBasket")).forEach((produit) => {
-      // Créer la ligne
-      let ligneProduit = document.createElement("tr");
-      let nomProduit = document.createElement("td");
-      let prixUnitProduit = document.createElement("td");
-      let removeProduit = document.createElement("i");
-
-      // Attribuer les classes
-      ligneProduit.setAttribute("id", "produit" + i);
-      removeProduit.setAttribute("id", "remove" + i);
-      removeProduit.setAttribute("class", "fas fa-trash-alt removeProduct");
-      // Pour chaque produit créer un event sur l'icone de la corbeille pour annuler ce produit
-      removeProduit.addEventListener("click", removeProduct.bind(i));
-      i++;
-
-      // Insertion dans le HTML
-      facture.appendChild(ligneProduit);
-      ligneProduit.appendChild(nomProduit);
-      ligneProduit.appendChild(prixUnitProduit);
-      ligneProduit.appendChild(removeProduit);
-
-      // Remplir le contenu des balises
-      nomProduit.innerHTML = produit.name;
-      prixUnitProduit.textContent = produit.price / 100 + " €";
-    });
-
-    // Dernière ligne du tableau : Total
-    facture.appendChild(ligneTotal);
-    ligneTotal.appendChild(colonneRefTotal);
-    colonneRefTotal.textContent = "Total à payer";
-    ligneTotal.appendChild(colonnePrixPaye);
-    colonnePrixPaye.setAttribute("id", "total_sum");
-
-    // Calcul du montant total
-    let totalPaye = 0;
-    JSON.parse(localStorage.getItem("userBasket")).forEach((produit) => {
-      totalPaye += produit.price / 100;
-    });
-
-    // Affichage du prix total à payer
-    console.log(`Total à payer : ${totalPaye}€`);
-    document.getElementById("total_sum").textContent = `${totalPaye},00€`;
-  }
-}
-
-function removeProduct(i) {
-  console.log(`Administration : Enlever le produit à l'index ${i}`);
-  // Recupérer le array
-  userBasket.splice(i, 1);
-  console.log(`Administration : ${userBasket}`);
-  // Vider le localstorage
-  localStorage.clear();
-  console.log(`Administration : localStorage vidé`);
-  // Mettre à jour le localStorage avec le nouveau panier
-  localStorage.setItem("userBasket", JSON.stringify(userBasket));
-  console.log(`Administration : localStorage mis à jour`);
-  // Réactualiser la page avec le nouveau montant du panier/ou panier vide
-  window.location.reload();
-}
-
-function checkBasket() {
-  // Vérifier que le panier contient un/des produit(s)
-  let etatPanier = JSON.parse(localStorage.getItem("userBasket"));
-  if (etatPanier.length < 1 || etatPanier == null) {
-    alert("Votre panier est vide !");
-    return false;
-  } else {
-    // Pour chaque produit dans le panier envoyé l'identifiant dans products
-    JSON.parse(localStorage.getItem("userBasket")).forEach((produit) => {
-      products.push(produit._id);
-    });
-    return true;
-  }
-}
-
-function checkInput() {
-  // Regex
-  let checkString = /^[A-Z]{1}[a-z]/;
-  let checkMail = /.+@.+\..+/;
-  let checkAdresse = /^[^@&"()!_$*€£`%+=\/;?#]+$/;
-
-  // Inputs de l'utilisateur
-  let formNom = document.getElementById("formNom").value;
-  let formPrenom = document.getElementById("formPrenom").value;
-  let formMail = document.getElementById("formMail").value;
-  let formAdresse = document.getElementById("formAdresse").value;
-  let formVille = document.getElementById("formVille").value;
-
-  // Vérifier les inputs de l'utilisateur
-  if (checkString.test(formNom) == false) {
-    alert("Votre nom doit commencer par une majuscule suivis de minuscules");
-    return false;
-  } else if (checkString.test(formPrenom) == false) {
-    alert("Votre prénom doit commencer par une majuscule suivis de minuscules");
-    return false;
-  } else if (checkMail.test(formMail) == false) {
-    alert("Votre email doit être au format xxx@yyy.zzz");
-    return false;
-  } else if (checkAdresse.test(formAdresse) == false) {
-    alert(
-      `Votre adresse contient un ou plusieurs des caractères interdits suivants : ` +
-        '[^@&"()!_$*€£`%+=/;?#]' +
-        " ou n'est pas renseignée."
-    );
-    return false;
-  } else if (checkString.test(formVille) == false) {
-    alert(
-      "Le nom de votre ville doit commencer par une majuscule suivis de minuscules"
-    );
-    return false;
-  } else {
-    return true;
-  }
-}
-
-function validOrder() {
-  let btnForm = document.getElementById("sendPost");
-  // Au clic sur le bouton d'envoi vérification de checkBasket() et checkInput()
-  btnForm.addEventListener("click", function (event) {
-    event.preventDefault();
-    if (checkBasket() == true && checkInput() == true) {
-      // Création de l'objet contact contenant les coordonnées de l'utilisateur
-      let contact = {
-        firstName: document.getElementById("formNom").value,
-        lastName: document.getElementById("formPrenom").value,
-        address: document.getElementById("formMail").value,
-        city: document.getElementById("formAdresse").value,
-        email: document.getElementById("formVille").value,
-      };
-      // Création de l'objet à envoyer à l'API
-      let objet = {
-        contact,
-        products,
-      };
-      // Conversion en JSON
-      let objetRequest = JSON.stringify(objet);
-      // Envoi de l'objet
-      var request = new XMLHttpRequest();
-      request.open("POST", "http://localhost:3000/api/furniture/order");
-      request.setRequestHeader("Content-Type", "application/json");
-      request.onreadystatechange = function () {
-        if (this.readyState == XMLHttpRequest.DONE) {
-          console.log(this.responseText);
-          // Récupération de la réponse du serveur
-          localStorage.setItem("order", this.responseText);
-          // Redirection vers la page de confirmation
-          window.location.href = "confirmation.html";
-        }
-      };
-      request.send(objetRequest);
-    } else {
-      console.log("Administration : ERROR");
-    }
-  });
-}
-
-function resultOrder() {
-  if (localStorage.getItem("order") != null) {
-    // Afficher un message de remerciement pour l'utilisateur
-    let order = JSON.parse(localStorage.getItem("order"));
-    document.getElementById("firstName").innerHTML = order.contact.firstName;
-    document.getElementById("lastName").innerHTML = order.contact.lastName;
-    // Calculer le montant total de la commande
-    let priceOrder = 0;
-    let displayPrice = order.products;
-    displayPrice.forEach((element) => {
-      priceOrder += element.price / 100;
-    });
-    document.getElementById("priceOrder").innerHTML = priceOrder;
-    document.getElementById("orderId").innerHTML = order.orderId;
-    // Réinitialiser le localStorage, products, contact et redirection vers la page d'accueil
-    setTimeout(function () {
-      localStorage.clear();
-      let products = [];
-      let contact;
-      window.location = "./index.html";
-    }, 7000);
-  } else {
-    // Retirer le message d'ordre de commande si le localStorage ne contient pas l'item order
-    let order = document.getElementById("order_result");
-    order.remove();
-    // Afficher un message d'erreur et rediriger l'utilisateur vers la page d'accueil
-    let resultCommand = document.getElementById("confirmation_commande");
-    let resultCommandError = document.createElement("div");
-    resultCommandError.setAttribute("id", "order_result_error");
-    let iconError = document.createElement("i");
-    iconError.setAttribute("class", "fas fa-exclamation-triangle fa-5x");
-    iconError.setAttribute("id", "error_logo");
-    let messageError = document.createElement("p");
-    messageError.innerHTML =
-      "Aucune commande passée, vous êtes arrivé(e) ici par erreur !";
-    resultCommand.appendChild(resultCommandError);
-    resultCommandError.appendChild(iconError);
-    resultCommandError.appendChild(messageError);
-    setTimeout(function () {
-      window.location = "./index.html";
-    }, 4500);
-  }
-}
-
-    
