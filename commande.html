@@ -4,28 +4,34 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="view/style.css">
-        <title>Page commande ours Orinoco</title>
-        <meta name="description" content="Merci de commander nos ours Orinoco."/>
+        <title>Confirmation de commande ours Orinoco</title>
+        <meta name="description" content="Merci pour votre commande d'ours Orinoco."/>
     </head>
     <body>
         <header> 
-            <img src="image-marque.PNG" alt="image de la marque Orinoco"/>
-            <nav>
-                <ul>
-                    <li><a href="index.html"><p>Retour</p></a></li>
-           
-                    <li><a href="panier.html"><img src="images/icon-basket.png" alt="symbole-panier"></a></li>
-                </ul>
-            </nav> 
+            <img src="image-marque.PNG" alt="image de la marque Orinoco"/>  
         </header>
         <article>
         <h1>Ours en peluche faits à la main</h1>
         </article>
+        <section id="confirmation_commande">
+            <div id="order_result">
+                <p><img src="images/bouton_fait.png" alt="icone reussite"/></p>
+                <p>Orinoco vous remercie pour votre commande<span id="lastName"></span><span id="firstName"></span></p>
+                <p>Votre commande est d'un montant de <span id = "priceOrder"></span>,00 €</p>
+                <p>Votre numéro de commande est le : <span id = "orderId"></span></p>
+                <p>A bientôt</p>
+            </div>
+        </section>
+        <footer>
+            <p>Venez visitez nos autres sites :</p>
+            <div class="sites">
+                <a href= ""><h3>Oribook</h3></a>
+                <a href= ""><h4>Oritextil</h4></a>
+            </div>
+        </footer>    
 
-
-
-
-
-    <script>addProduct()</script>
+        <script src="view/teddy.js"></script>
+        <script>resultOrder()</script>
     </body>
 </html>
