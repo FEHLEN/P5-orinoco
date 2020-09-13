@@ -100,27 +100,31 @@ async function productDetails() {
   idProduit = location.search.substring(4);
   // "http://localhost:3000/api/furniture/id"
   const produitSelected = await getProducts();
-  console.log(produitSelected._id);
-  document
-    .getElementById("img_product")
-    .setAttribute("src", produitSelected.imageUrl);
-  document.getElementById("name_product").innerHTML = produitSelected.name;
-  document.getElementById("description_product").innerHTML =
-    produitSelected.description;
-  document.getElementById("price_product").innerHTML =
-    produitSelected.price / 100 + ",00€";
-  console.log(produitSelected.colors);  
+    console.log(produitSelected._id);
+    document
+      .getElementById("img_product")
+      .setAttribute("src", produitSelected.imageUrl);
+    document.getElementById("name_product").innerHTML = produitSelected.name;
+    document.getElementById("description_product").innerHTML =
+      produitSelected.description;
+    document.getElementById("price_product").innerHTML =
+      produitSelected.price / 100 + ",00€";
+    console.log(produitSelected.colors); 
   var select = document.getElementById("colorsList");
-    var length = select.options.length;
-    for (i = length-1; i >= 0; i--) {
+  var length = select.options.length;
+  for (i = length-1; i >= 0; i--) {
         select.options[i] = null;
-    }
+  }
+
   for(var i in produitSelected.colors){
       // Creer un element OPTION
-    var option = document.createElement('option');
-    option.innerHTML = produitSelected.colors[i];
+      var option = document.createElement('option');
+      option.innerHTML = produitSelected.colors[i];
       // + définition valeur etc....
-  document.getElementById("colorsList").appendChild(option);}
+      document.getElementById("colorsList").appendChild(option);}
+    //créer un element quantiteProduit
+ 
+  
 }
  
 function addProduct() {
@@ -134,12 +138,125 @@ function addProduct() {
     console.log("Administration : le produit a été ajouté au panier");
     // Notifier l'utilisateur de l'ajout au panier
     setTimeout(function () {
-      document.getElementById("add_done").textContent =
+      document.getElementById("add_case").textContent =
         "Vous avez ajouté ce produit à votre panier !";
     }, 500);
     function add_done_remove() {
-      document.getElementById("add_done").textContent = "";
+      document.getElementById("add_case").textContent = "";
     }
     window.setTimeout(add_done_remove, 2000);
   });
 }
+
+function commandeProduct() {
+  // Vérifier si un produit est dans le panier
+  if (JSON.parse(localStorage.getItem("userBasket")).length > 0) {
+    // S'il n'est pas vide supprimer le message et créer le tableau récapitulatif
+    document.getElementById("empty_basket").remove();
+
+    // Structure du tableau
+    let facture = document.createElement("table");
+    let ligneTableau = document.createElement("tr");
+    let colonneNom = document.createElement("th");
+    let colonnePrixUnitaire = document.createElement("th");
+
+    let ligneTotal = document.createElement("tr");
+    let colonneRefTotal = document.createElement("th");
+    let colonnePrixPaye = document.createElement("td");
+    
+
+    // Placer la structure dans la page et le contenu des entêtes
+    let factureSection = document.getElementById("basket-resume");
+    factureSection.appendChild(facture);
+    facture.appendChild(ligneTableau);
+    ligneTableau.appendChild(colonneNom);
+    colonneNom.textContent = "Nom du produit";
+    ligneTableau.appendChild(colonnePrixUnitaire);
+    colonnePrixUnitaire.textContent = "Prix du produit";
+    
+    
+    
+
+    let i = 0;
+    //dans le tableau produit, incrédentation de chaque ligne de produit avec le nom, le prix
+    //la quantité et suppression
+    JSON.parse(localStorage.getItem("userBasket")).forEach((produit) => {
+      // Créer la ligne
+      let ligneProduit = document.createElement("tr");
+      let nomProduit = document.createElement("td");
+      let prixUnitProduit = document.createElement("td");
+      let removeProduit = document.createElement("input");
+     
+      
+      // Attribuer les classes
+      ligneProduit.setAttribute("id", "produit" + i);
+      removeProduit.setAttribute("id", "remove" + i);
+      removeProduit.setAttribute("class","bt-supprimer");
+      removeProduit.addEventListener("click", removeProduct.bind(i));
+      i++;
+
+      // Insertion dans le HTML
+      facture.appendChild(ligneProduit);
+      ligneProduit.appendChild(nomProduit);
+      ligneProduit.appendChild(prixUnitProduit);
+      ligneProduit.appendChild(removeProduit);
+
+      // Remplir le contenu des balises
+      nomProduit.innerHTML = produit.name;
+      prixUnitProduit.textContent = produit.price / 100 + " €";
+      removeProduit.type ="button";
+      removeProduit.value = "supprimer";
+     
+
+       // Dernière ligne du tableau : Total
+       facture.appendChild(ligneTotal);
+       ligneTotal.appendChild(colonneRefTotal);
+       colonneRefTotal.textContent = "Total à payer";
+       ligneTotal.appendChild(colonnePrixPaye);
+       colonnePrixPaye.setAttribute("id", "total_sum");
+    });
+     // Calcul du montant total
+     let totalPaye = 0;
+     JSON.parse(localStorage.getItem("userBasket")).forEach((produit) => {
+       totalPaye += produit.price / 100;
+     });
+     // Affichage du prix total à payer
+     console.log(`Total à payer : ${totalPaye}€`);
+     document.getElementById("total_sum").textContent = `${totalPaye},00€`;
+  }
+}
+//fonction suppression de ligne
+function removeProduct(i) {
+  console.log(`Administration : Enlever le produit à l'index ${i}`);
+  // Recupérer le tableau
+  userBasket.splice(i, 1);
+  console.log(`Administration : ${userBasket}`);
+  // Vider le localstorage
+  localStorage.clear();
+  console.log(`Administration : localStorage vidé`);
+  // Mettre à jour le localStorage avec le nouveau panier
+  localStorage.setItem("userBasket", JSON.stringify(userBasket));
+  console.log(`Administration : localStorage mis à jour`);
+  // Réactualiser la page avec le nouveau montant du panier/ou panier vide
+  window.location.reload();
+}
+
+function checkBasket() {
+  // Vérifier que le panier contient un/des produit(s)
+  let etatPanier = JSON.parse(localStorage.getItem("userBasket"));
+  if (etatPanier.length < 1 || etatPanier == null) {
+    alert("Votre panier est vide !");
+    return false;
+  } else {
+    // Pour chaque produit dans le panier envoyé l'identifiant dans products
+    JSON.parse(localStorage.getItem("userBasket")).forEach((produit) => {
+      products.push(produit._id);
+    });
+    return true;
+  }
+}
+
+
+
+
+
