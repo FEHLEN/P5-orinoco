@@ -136,25 +136,25 @@ td{
 }
 td, th{
     border:1px solid black;
-}
-    /*formulaire*/
-aside{
-    display:flex;flex-direction: row;
-}
-aside h5{
-    width: 50%;color:rgb(85, 56, 56);font-size: 1.5rem;
-}
+} 
 .basket{
     display: flex;flex-direction: row;width: 100%;padding-bottom: 3%;
 }
 #basket-resume{
     width: 40%;
 }
+#basket-resume p{
+    width: 100%;color:rgb(85, 56, 56);font-size: 1.5rem;font-weight: bold;
+}
+ /*formulaire*/
 .formulaire{
     width: 60%;padding-left: 10%;
 }
 #formulaire{
     background-color: rgb(204, 197, 197);border-radius: 10px;
+}
+.formulaire h5{
+    width: 100%;color:rgb(85, 56, 56);font-size: 1.5rem;
 }
 #formulaire h2{
     margin-left: 2%;
@@ -204,3 +204,92 @@ label{
     width: 80%;
 }
 /*reponsive*/
+@media all and (max-width : 1024px)
+{
+    body{
+        width: 100%;margin:0;
+    }
+    /*page accueil*/
+    nav{
+        top:10px; width: 80%;
+    }
+    nav li{
+         width: 30%;margin-left:5%;
+    }
+    nav p{
+         font-size: 1.4rem;color:black;
+    }
+    nav img{
+         border:2px solid rgb(161, 123, 123);border-radius: 15px;
+         width: 20%;background-color: white;position:absolute;right: 5px;
+    }
+    nav a{
+         text-decoration:none;padding:3px;
+    }
+    .article{
+        display:flex;
+        flex-direction: column;
+    }
+    .img_article{
+        width: 300px;height: 200px;
+    }
+    /*page produit*/
+    #photo img{
+        width:350px ;height: 250px;
+    }
+    #product{
+        display:flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    #colorsList{
+        width: 40%;
+        margin-left:25%;
+        margin-bottom: 5%;
+    }
+    #add_product{
+        width: 40%;
+        margin:auto;
+    }
+    
+    .retour{
+        margin-bottom: 10%;
+
+    }
+    .retour h3{
+        width: 80%;
+    }
+    footer{
+        margin-top: 5%;
+    }
+    /*panier*/
+    .basket{
+        display:flex;
+        flex-direction: column;
+    }
+    #basket-resume{
+        width: 100%;
+    }
+    .formulaire{
+        width: 100%;
+        padding:0px;
+    }
+    #firstName, #lastName, #address, #city, #email{
+        width: 80%;
+        margin-left:10%;
+    }
+    #sendPost{
+        width: 60%;
+        height: 50px;
+    }
+    footer{
+        margin-top: 15%;
+    }
+    .accueil{
+        height: 40px;
+        margin-bottom: 10%;
+    }
+    .accueil h3{
+        width: 100%;
+    }
+}
