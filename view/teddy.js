@@ -75,7 +75,7 @@ async function allProductsList() {
     prix.setAttribute("class", "price_article");
     lienArticle.setAttribute("class", "selection_article");
     lienArticle.setAttribute("href", "produit.html?id=" + produit._id);
-    // Hiérarchiser les éléments créés
+    // Hiérarchiser parent/enfant
     listProduct.appendChild(bloc);
     bloc.appendChild(blocPhoto);
     blocPhoto.appendChild(imageArticle);
@@ -98,7 +98,7 @@ async function allProductsList() {
 async function productDetails() {
   // Collecter l'URL après le ?id= pour le récupérer uniquement sur l'API
   idProduit = location.search.substring(4);
-  // "http://localhost:3000/api/furniture/id"
+  // "http://localhost:3000/api/teddies/_id"
   const produitSelected = await getProducts();
     console.log(produitSelected._id);
     document
@@ -115,16 +115,13 @@ async function productDetails() {
   for (i = length-1; i >= 0; i--) {
         select.options[i] = null;
   }
-
+  //sourceshttps://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Boucles_et_it%C3%A9ration 
   for(var i in produitSelected.colors){
       // Creer un element OPTION
       var option = document.createElement('option');
       option.innerHTML = produitSelected.colors[i];
       // + définition valeur etc....
       document.getElementById("colorsList").appendChild(option);}
-    //créer un element quantiteProduit
- 
-  
 }
  
 function addProduct() {
@@ -140,7 +137,7 @@ function addProduct() {
     setTimeout(function () {
       document.getElementById("add_case").textContent =
         "Vous avez ajouté ce produit à votre panier !";
-    }, 500);
+    }, 800);
     function add_done_remove() {
       document.getElementById("add_case").textContent = "";
     }
@@ -173,41 +170,33 @@ function commandeProduct() {
     colonneNom.textContent = "Nom du produit";
     ligneTableau.appendChild(colonnePrixUnitaire);
     colonnePrixUnitaire.textContent = "Prix du produit";
-    
-    
-    
-
     let i = 0;
     //dans le tableau produit, incrédentation de chaque ligne de produit avec le nom, le prix
-    //la quantité et suppression
+    //et la possibilité de suppression
     JSON.parse(localStorage.getItem("userBasket")).forEach((produit) => {
       // Créer la ligne
       let ligneProduit = document.createElement("tr");
       let nomProduit = document.createElement("td");
       let prixUnitProduit = document.createElement("td");
       let removeProduit = document.createElement("input");
-     
-      
       // Attribuer les classes
       ligneProduit.setAttribute("id", "produit" + i);
       removeProduit.setAttribute("id", "remove" + i);
       removeProduit.setAttribute("class","bt-supprimer");
       removeProduit.addEventListener("click", removeProduct.bind(i));
       i++;
+      //sources https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Function/bind//
 
       // Insertion dans le HTML
       facture.appendChild(ligneProduit);
       ligneProduit.appendChild(nomProduit);
       ligneProduit.appendChild(prixUnitProduit);
       ligneProduit.appendChild(removeProduit);
-
       // Remplir le contenu des balises
       nomProduit.innerHTML = produit.name;
       prixUnitProduit.textContent = produit.price / 100 + " €";
       removeProduit.type ="button";
       removeProduit.value = "supprimer";
-     
-
        // Dernière ligne du tableau : Total
        facture.appendChild(ligneTotal);
        ligneTotal.appendChild(colonneRefTotal);
@@ -242,7 +231,7 @@ function removeProduct(i) {
 }
 
 function checkBasket() {
-  // Vérifier que le panier contient un/des produit(s)
+  // Vérifier que le panier contient l'un des produits
   let etatPanier = JSON.parse(localStorage.getItem("userBasket"));
   if (etatPanier.length < 1 || etatPanier == null) {
     alert("Votre panier est vide !");
@@ -255,8 +244,123 @@ function checkBasket() {
     return true;
   }
 }
+//traitement du formulaire
 
+function checkInput() {
+  // Regex
+  let checkString = /^[A-Z]{1}[a-z]/;
+  let checkMail = /.+@.+\..+/;
+  let checkAdresse = /^[^@&"()!_$*€£`%+=\/;?#]+$/;
 
+  // Chercher les inputs
+  let nom = document.getElementById("firstName").value;
+  let prenom = document.getElementById("lastName").value;
+  let adresse = document.getElementById("address").value;
+  let ville = document.getElementById("city").value;
+  let email = document.getElementById("email").value;
+// Tester les inputs de l'utilisateur
+  if (checkString.test(nom) == false) {
+  alert("Votre nom doit commencer par une majuscule suivis de minuscules");
+  return false;
+  } else if (checkString.test(prenom) == false) {
+    alert("Votre prénom doit commencer par une majuscule suivie de minuscules");
+    return false;
+  } else if (checkMail.test(email) == false) {
+    alert("Votre email doit être au format xxx@yyy.zzz");
+    return false;
+  } else if (checkAdresse.test(adresse) == false) {
+    alert(
+    `Votre adresse contient un ou plusieurs des caractères interdits suivants : ` +
+      '[^@&"()!_$*€£`%+=/;?#]' +
+      " ou n'est pas renseignée."
+    );
+    return false;
+  } else if (checkString.test(ville) == false) {
+    alert(
+    "Le nom de votre ville doit commencer par une majuscule suivis de minuscules");
+    return false;
+  } else {
+    return true;
+  }
+}
 
+function validOrder() {
+  let validation = document.getElementById("sendPost");
+  // Au clic vérification de checkBasket() et checkInput()
+  validation.addEventListener("click", function (event) {
+    event.preventDefault();
+    if (checkBasket() == true && checkInput() == true) {
+      // Création de l'objet contact contenant les coordonnées de l'utilisateur
+      let contact = {
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        address: document.getElementById("address").value,
+        city: document.getElementById("city").value,
+        email: document.getElementById("email").value,
+      };
+      // Création de l'objet à envoyer à l'API
+      let objet = {
+        contact,
+        products,
+      };
+      let objetRequest = JSON.stringify(objet);
+      // Envoi de l'objet
+      var request = new XMLHttpRequest();
+      request.open("POST", "http://localhost:3000/api/teddies/order");
+      request.setRequestHeader("Content-Type", "application/json");
+      request.onreadystatechange = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
+          console.log(this.responseText);
+          // Récupération de la réponse du serveur
+          localStorage.setItem("order", this.responseText);
+          // Redirection vers la page de confirmation
+          window.location.href = "commande.html";
+        }
+      };
+      request.send(objetRequest);
+    } else {
+      console.log("Administration : ERROR");
+    }
+  });
+}
 
+function resultOrder() {
+  if (localStorage.getItem("order") != null) {
+    // Afficher un message de remerciement pour l'utilisateur
+    let order = JSON.parse(localStorage.getItem("order"));
+    document.getElementById("firstName").innerHTML = order.contact.firstName;
+    document.getElementById("lastName").innerHTML = order.contact.lastName;
+    // Calculer le montant total de la commande
+    let priceOrder = 0;
+    let displayPrice = order.products;
+    displayPrice.forEach((element) => {
+      priceOrder += element.price / 100;
+    });
+    document.getElementById("priceOrder").innerHTML = priceOrder;
+    document.getElementById("orderId").innerHTML = order.orderId;
+    // Réinitialiser le localStorage, products, contact et redirection vers la page d'accueil
+    setTimeout(function () {
+      localStorage.clear();
+      let products = [];
+      let contact;
+      window.location = "./index.html";
+    }, 12000);
+  } else {
+    // Retirer le message d'ordre de commande si le localStorage ne contient pas l'item order
+    let order = document.getElementById("order_result");
+    order.remove();
+    // Afficher un message d'erreur et rediriger l'utilisateur vers la page d'accueil
+    let resultCommand = document.getElementById("confirmation_commande");
+    let resultCommandError = document.createElement("div");
+    resultCommandError.setAttribute("id", "order_result_error");
+    let messageError = document.createElement("p");
+    messageError.innerHTML =
+      "Aucune commande passée, vous êtes arrivé(e) ici par erreur !";
+    resultCommand.appendChild(resultCommandError);
+    resultCommandError.appendChild(messageError);
+    setTimeout(function () {
+      window.location = "./index.html";
+    }, 4500);
+  }
+}
 

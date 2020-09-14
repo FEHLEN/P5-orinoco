@@ -1,231 +1,206 @@
 /*toutes les pages*/
 body{
-    display: flex;
-    flex-direction: column;
-    width: 80%;margin:auto;
+    display: flex;flex-direction: column;width: 80%;margin:auto;
 }
 header{
-    width:100%;
-    margin:auto;
-    background-color:rgb(204, 197, 197);
-    display:flex;
+    width:100%;margin:auto;background-color:rgb(204, 197, 197);display:flex;
     flex-direction: row;
 }
 header img{
-    width: 100px;
-    height: 60px;
-    margin-top: 3%;
-    margin-left: 5%;
-    margin-bottom: 3%;
+    width: 100px;height: 60px;margin-top: 3%;margin-left: 5%;margin-bottom: 3%;
 }
 footer{
-    width: 80%;
-    margin:auto;
+    width: 80%;margin:auto;
 }
 /*page accueil*/
 nav{
-   top:10px; 
-   width: 80%;
+   top:10px; width: 80%;
 }
 nav li{
-    width: 25%;
-    margin-left:20%;
+    width: 25%;margin-left:20%;
 }
 nav p{
-    font-size: 1.7rem;
-    color:black;
+    font-size: 1.7rem;color:black;
 }
 nav img{
-    margin-right: 20px;
-    border:2px solid rgb(161, 123, 123);
-    border-radius: 15px;
-    width: 20%;
-    background-color: white;
+    margin-right: 20px;border:2px solid rgb(161, 123, 123);border-radius: 15px;
+    width: 20%;background-color: white;
 }
 nav a{
-    text-decoration:none;
-    padding:3px;
-
-    
+    text-decoration:none;padding:3px;
 }
 nav ul{
-    list-style-type: none;
-    display: flex;
-    flex-direction: row;
+    list-style-type: none;display: flex;flex-direction: row;
 }
 article h2{
-    font-size:2rem;
-    color :rgb(129, 93, 93);
-    text-align: center;
-    margin-bottom: 5%;
+    font-size:2rem;color :rgb(129, 93, 93);text-align: center;margin-bottom: 5%;
 }
 article h1{
-    text-align:center;
-    color:rgb(161, 123, 123);
-    border-radius: 15px;
-    font-size:1.7rem;
-    font-weight: bold;
-    margin-top: 5%;
+    text-align:center;color:rgb(161, 123, 123);border-radius: 15px;font-size:1.8rem;font-weight: bold;margin-top: 5%;
     margin-bottom: 5%;
 }
 .article{
-    display: flex;
-    flex-direction: row;
-    border: 2px solid rgb(161, 123, 123);
-    background-color:rgb(204, 197, 197);
-    margin-bottom: 5%;
+    display: flex;flex-direction: row;border: 2px solid rgb(161, 123, 123);
+    background-color:rgb(204, 197, 197);margin-bottom: 5%;
 }
 .bloc_description{
-    padding-left: 3%;
-    padding-right: 3%;
+    padding-left: 3%;padding-right: 3%;
 }
 .name_article{
-    text-align: center;
-    font-weight: bold;
-    border:3px solid rgb(161, 123, 123);
-    border-radius: 15px;
-    padding:2%;
+    text-align: center;font-weight: bold;border:3px solid rgb(161, 123, 123);
+    border-radius: 15px;padding:2%;
 }
 .bloc_droit a{
-    background-color:rgb(161, 123, 123);
-    padding:2%;
-    color:black;
-    font-size: 2rem;
-    border-radius: 15px;
-    padding:2%;
-    text-decoration:none;
+    background-color:rgb(161, 123, 123);padding:2%;color:black;font-size: 2rem;
+    border-radius: 15px;padding:2%;text-decoration:none;
 }
 .bloc_droit p{
     font-size: 3rem;
 }
 #Liste{
-    width:100% ;
-    margin:auto;
-    margin-bottom: 3%;
+    width:100% ;margin:auto;margin-bottom: 3%;
 }
 .img_article{
-    width: 500px;
-    height: 400px;
+    width: 500px;height: 400px;
 }
 footer p{
-    text-align: center;
-    font-size:1.7rem;
-    margin-top:5%;
-    margin-bottom: 5%;
-    padding-top: 1%;
-    padding-bottom: 1%;
+    text-align: center;font-size:1.7rem;margin-top:5%;margin-bottom: 5%;padding-top: 1%;padding-bottom: 1%;
     border: 3px solid rgb(161, 123, 123);
 } 
 .sites a{
-    font-size: 1.5rem;
-    text-decoration: none;
-    color:black;
-    font-size:1.7rem;
-    background-color:rgb(161, 123, 123);
-    padding:2%;
-    border-radius: 15px;
+    text-decoration: none;color:black;font-size:1.7rem;
+    background-color:rgb(161, 123, 123);padding:2%;border-radius: 15px;
     }
 .sites{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    display: flex;flex-direction: row;justify-content: space-around;
     margin-bottom: 5%;
 }
 .sites h3{
-    margin:0px;
-    text-align:center;
-    font-size: 2rem;
-    font-weight: bold;
+    margin:0px;text-align:center;font-size: 2rem;font-weight: bold;
 }
 .sites h4{
-    margin:0px;
-    padding:0px;
-    text-align:center;
-    font-size: 2rem;
-    font-weight: bold;
+    margin:0px;padding:0px;text-align:center;font-size: 2rem;font-weight: bold;
 }
 /*page produit*/
 nav h2{
-    border:2px solid rgb(129, 93, 93);
-    width: 50%;
-    height: 50px;
-    border-radius:25%;
+    border:2px solid rgb(129, 93, 93);width: 50%;height: 50px;border-radius:25%;
 }
 #description{
-    padding-left: 2%;
-    padding-right: 2%;
+    padding-left: 2%;padding-right: 2%;
 }
 #description p{
     font-size: 1.7rem;
 }
 h3{
-    text-align:center;
-    font-size: 2rem;
-    font-weight: bold;
-    margin-top: 5%;
-    margin-bottom: 5%; 
+    text-align:center;font-size: 2rem;font-weight: bold;margin-top: 5%;margin-bottom: 5%; 
 }
 #photo img{
-    width: 500px;
-    height: 400px;
-
+    width: 500px;height: 400px;
 }
 #product{
-    display:flex;
-    flex-direction: row;
+    display:flex;flex-direction: row;
 }
 #name_product{
-    border:3px solid rgb(161, 123, 123);
-    border-radius: 15px;
-    padding:2%;
+    border:3px solid rgb(161, 123, 123);border-radius: 15px;padding:2%;
 }
 #add_product{
-    width: 20%;
-    height: 40px;
-    margin-left: 100px;
+    width: 20%;height: 40px;margin-left: 100px;
 }
 .retour{
-    height: 30px;
-    width: 50%;
-    margin:auto;
-    margin-top: 5%; 
+    height: 30px;width: 50%;margin:auto;margin-top: 5%; 
 }
 .retour a{
-    width: 25%;
-    text-decoration: none;
+    width: 25%;text-decoration: none;
     color : rgb(129, 93, 93);
 }
 .retour a :hover{
     background-color: rgb(161, 123, 123);
 }
 .retour h3{
-    border: 3px solid rgb(129, 93, 93);
-    border-radius: 15px;
-    width: 25%;
+    border: 3px solid rgb(129, 93, 93);border-radius: 15px;width: 25%;
     margin:auto;
 }
 #colorsList{
-    width: 20%;
-    margin-bottom: 5%;
+    width: 20%;margin-bottom: 5%;
 }
-/*page panier*/
+           /*page panier*/
 table{
-    border-collapse: collapse;
-    width: 50%;
-    margin-left: 5%;
-   
+    border-collapse: collapse;width: 95%;margin-left: 2%;
 }
+
 th{
-    background-color: rgb(204, 197, 197);
-    height: 30px;
+    background-color: rgb(204, 197, 197);height: 30px;font-size: 1.2rem;
 }
 td{
-    width: 30%;
-    height: 25px;
-    color :rgb(85, 56, 56);
-    
-    text-align: center;
+    width: 80%;height: 25px;color :rgb(85, 56, 56);font-size: 1.2rem;text-align: center;
 }
 td, th{
     border:1px solid black;
 }
+    /*formulaire*/
+aside{
+    display:flex;flex-direction: row;
+}
+aside h5{
+    width: 50%;color:rgb(85, 56, 56);font-size: 1.5rem;
+}
+.basket{
+    display: flex;flex-direction: row;width: 100%;padding-bottom: 3%;
+}
+#basket-resume{
+    width: 40%;
+}
+.formulaire{
+    width: 60%;padding-left: 10%;
+}
+#formulaire{
+    background-color: rgb(204, 197, 197);border-radius: 10px;
+}
+#formulaire h2{
+    margin-left: 2%;
+}
+.identité{
+    border:1px solid rgb(85, 56, 56);border-radius: 10px;margin-bottom: 2%;
+    box-shadow: 2px 3px 2px rgb(110, 107, 107);
+}
+.coordonnées{
+    border:1px solid rgb(85, 56, 56);box-shadow: 2px 3px 2px rgb(110, 107, 107);
+    border-radius: 10px;
+}
+label{
+    width: 20%;padding-left: 20%;font-size: 1.2rem;
+}
+#firstName, #lastName{
+    width: 50%;height: 25px;margin-left:20%;border-radius: 10px;
+}
+#address, #city, #email{
+    width: 50%;height: 25px;margin-left:20%;border-radius: 10px; 
+}
+.accueil{
+    height: 30px;width: 50%;margin:auto;margin-top: 2%;
+    margin-bottom: 5%; 
+}
+.accueil a{
+    width: 25%;text-decoration: none;
+    color : rgb(129, 93, 93);
+}
+.accueil a :hover{
+    background-color: rgb(161, 123, 123);
+}
+.accueil h3{
+    border: 3px solid rgb(129, 93, 93);border-radius: 15px;width: 25%;
+    margin:auto;
+}
+#sendPost{
+    height: 30px;border-radius: 10px;position: absolute;right: 60px;
+    font-size: 1.2rem;
+}
+/*page confirmation*/
+#order_result p{
+    text-align: center;
+}
+#order_result h3{
+    font-weight: bold;
+    width: 80%;
+}
+/*reponsive*/

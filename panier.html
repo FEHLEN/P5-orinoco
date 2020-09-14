@@ -21,24 +21,59 @@
         <article>
         <h1>Ours en peluche faits à la main</h1>
         </article>
-        <section>
+        <aside>
+        <h5>Voici votre récapitulatif de commande :</h5>
+        <h5>Pour passer commande, merci de remplir ce formulaire.</h5>
+        </aside> 
             <main class="basket">
                 <div id="basket-resume">
                     <p id="empty_basket">Vous n'avez rien dans le panier</p>
-                   
+                </div>
+            
+                <div class="formulaire">
+                    
+                    <form id="formulaire" method="post">
+                        <div class="identité">
+                            <h2>Votre identité</h2>
+                            <h4>
+                            <label for ="Nom">Votre nom</label><br/>
+                            <input type = "text" name = "firstName" id = "firstName"/>
+                            </h4>
+                            <h4>
+                            <label for ="Prénom">Votre prénom</label><br/>
+                            <input type = "text" name = "lastName" id = "lastName"/>
+                            </h4>
+                        </div>
+                        <div class="coordonnées">
+                            <h2>Vos coordonnées</h2>
+                            <h4>
+                            <label for ="adresse postale">Votre adresse, numéro et rue :</label><br/>
+                            <input type = "text" name = "adresse" id ="address"/>
+                            </h4>
+                            <h4>
+                            <label for="ville">Votre ville sans le code postale :</label><br/>
+                            <input type = "text" name = "ville" id ="city"/>
+                            </h4>
+                            <h4>
+                            <label for="email">Votre adresse email :</label><br/>
+                            <input type="email" name ="email" id ="email"/>
+                            </h4>
+                        </div>
+                        <input type="submit" value="Validez votre panier et vos informations" id="sendPost">
+                    </form>
                 </div>
             </main>
-            <main class="formulaire">
-                
-            </main>
-
-
-
-        </section>
+        <footer>
+            <div class="accueil">
+                <a href= "index.html"><h3>Accueil</h3></a>
+            </div> 
+           
+        </footer>
 
 
 
     <script src="view/teddy.js"></script>
     <script>commandeProduct()</script>
+    <script>validOrder()</script>
     </body>
 </html>
