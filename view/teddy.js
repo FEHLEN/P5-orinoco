@@ -5,11 +5,11 @@ let idProduit = "";
 
 if (localStorage.getItem("userBasket")) {
   console.log(
-    "Administration : le panier de l'utilisateur existe déjà dans le localStorage"
+    "Contrôle : le panier de l'utilisateur existe déjà dans le localStorage"
   );
 } else {
   console.log(
-    "Administration : Le panier n'existe pas, il va être créer et envoyer dans le localStorage"
+    "Contrôle : le panier n'existe pas, il va être créer et envoyer dans le localStorage"
   );
   let panierInit = [];
   localStorage.setItem("userBasket", JSON.stringify(panierInit));
@@ -26,7 +26,7 @@ function getProducts() {
     request.onreadystatechange = function () {
       if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
         resolve(JSON.parse(this.responseText));
-        console.log("Administration : connection ok");
+        console.log("Contrôle : connection ok");
         // Supprimer le message d'erreur si l'appel est réussi
         error = document.getElementById("error");
         // Supprimer le message d'erreur s'il existe
@@ -34,7 +34,7 @@ function getProducts() {
           error.remove();
         }
       } else {
-        console.log("Administration : ERROR connection API");
+        console.log("Contrôle : ERREUR connection API");
       }
     };
     request.open("GET", APIURL + idProduit);
@@ -50,9 +50,8 @@ async function allProductsList() {
   // Ajouter la section dans le HTML
   let everybody = document.getElementById("everybody");
   everybody.appendChild(listProduct);
-  // Pour chaque produit de l'API créer l'encadré HTML du produit
+  // Pour chaque produit de l'API créer lA STRUCTURE HTML du produit
   produits.forEach((produit) => {
-    // Créer le HTML
     let bloc = document.createElement("article");
     let blocPhoto = document.createElement("div");
     let imageArticle = document.createElement("img");
@@ -115,7 +114,7 @@ async function productDetails() {
   for (i = length-1; i >= 0; i--) {
         select.options[i] = null;
   }
-  //sourceshttps://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Boucles_et_it%C3%A9ration 
+  //sourceshttps://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Boucles_et_itERAtion 
   for(var i in produitSelected.colors){
       // Creer un element OPTION
       var option = document.createElement('option');
@@ -132,12 +131,12 @@ function addProduct() {
     // Récupérer le panier dans le localStorage et ajouter le produit dans le panier avant renvoi dans le localStorage
     userBasket.push(produits);
     localStorage.setItem("userBasket", JSON.stringify(userBasket));
-    console.log("Administration : le produit a été ajouté au panier");
+    console.log("Le produit a été ajouté au panier");
     // Notifier l'utilisateur de l'ajout au panier
     setTimeout(function () {
       document.getElementById("add_case").textContent =
         "Vous avez ajouté ce produit à votre panier !";
-    }, 800);
+    }, 700);
     function add_done_remove() {
       document.getElementById("add_case").textContent = "";
     }
@@ -159,7 +158,7 @@ function commandeProduct() {
 
     let ligneTotal = document.createElement("tr");
     let colonneRefTotal = document.createElement("th");
-    let colonnePrixPaye = document.createElement("td");
+    let colonnePrixPayer = document.createElement("td");
     
 
     // Placer la structure dans la page et le contenu des entêtes
@@ -201,31 +200,31 @@ function commandeProduct() {
        facture.appendChild(ligneTotal);
        ligneTotal.appendChild(colonneRefTotal);
        colonneRefTotal.textContent = "Total à payer";
-       ligneTotal.appendChild(colonnePrixPaye);
-       colonnePrixPaye.setAttribute("id", "total_sum");
+       ligneTotal.appendChild(colonnePrixPayer);
+       colonnePrixPayer.setAttribute("id", "total_sum");
     });
      // Calcul du montant total
-     let totalPaye = 0;
+     let totalAPayer = 0;
      JSON.parse(localStorage.getItem("userBasket")).forEach((produit) => {
-       totalPaye += produit.price / 100;
+       totalAPayer += produit.price / 100;
      });
      // Affichage du prix total à payer
-     console.log(`Total à payer : ${totalPaye}€`);
-     document.getElementById("total_sum").textContent = `${totalPaye},00€`;
+     console.log(`Total à payer : ${totalAPayer}€`);
+     document.getElementById("total_sum").textContent = `${totalAPayer},00€`;
   }
 }
 //fonction suppression de ligne
 function removeProduct(i) {
-  console.log(`Administration : Enlever le produit à l'index ${i}`);
+  console.log(`Contrôle : Enlever le produit à l'index ${i}`);
   // Recupérer le tableau
   userBasket.splice(i, 1);
-  console.log(`Administration : ${userBasket}`);
+  console.log(`Contrôle : ${userBasket}`);
   // Vider le localstorage
   localStorage.clear();
-  console.log(`Administration : localStorage vidé`);
+  console.log(`Contrôle : localStorage vidé`);
   // Mettre à jour le localStorage avec le nouveau panier
   localStorage.setItem("userBasket", JSON.stringify(userBasket));
-  console.log(`Administration : localStorage mis à jour`);
+  console.log(`Contrôle : localStorage mis à jour`);
   // Réactualiser la page avec le nouveau montant du panier/ou panier vide
   window.location.reload();
 }
@@ -319,7 +318,7 @@ function validOrder() {
       };
       request.send(objetRequest);
     } else {
-      console.log("Administration : ERROR");
+      console.log("Contrôle : ERREUR");
     }
   });
 }
@@ -355,7 +354,7 @@ function resultOrder() {
     resultCommandError.setAttribute("id", "order_result_error");
     let messageError = document.createElement("p");
     messageError.innerHTML =
-      "Aucune commande passée, vous êtes arrivé(e) ici par erreur !";
+      "Aucune commande passée, il y a une erreur!";
     resultCommand.appendChild(resultCommandError);
     resultCommandError.appendChild(messageError);
     setTimeout(function () {
