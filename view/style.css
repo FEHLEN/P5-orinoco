@@ -196,12 +196,19 @@ label{
     font-size: 1.2rem;
 }
 /*page confirmation*/
+
 #order_result p{
     text-align: center;
 }
 #order_result h3{
     font-weight: bold;
     width: 80%;
+}
+#order_result h2{
+    font-weight: bold;
+    color:rgb(85, 56, 56);
+    font-size: 1.2rem;
+    text-align: center;
 }
 /*reponsive*/
 @media all and (max-width : 1024px)

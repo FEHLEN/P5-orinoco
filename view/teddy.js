@@ -44,6 +44,7 @@ function getProducts() {
 
 async function allProductsList() {
   const produits = await getProducts();
+  console.log(produits);
   // Créer la section accueillant la liste des produits
   let listProduct = document.createElement("section");
   listProduct.setAttribute("id", "list-articles");
@@ -337,13 +338,14 @@ function resultOrder() {
     });
     document.getElementById("priceOrder").innerHTML = priceOrder;
     document.getElementById("orderId").innerHTML = order.orderId;
-    // Réinitialiser le localStorage, products, contact et redirection vers la page d'accueil
+    // Remettre à zero le localStorage, products, contact et redirection vers la page d'accueil
     setTimeout(function () {
       localStorage.clear();
       let products = [];
       let contact;
       window.location = "./index.html";
     }, 12000);
+
   } else {
     // Retirer le message d'ordre de commande si le localStorage ne contient pas l'item order
     let order = document.getElementById("order_result");
