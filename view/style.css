@@ -124,6 +124,7 @@ h3{
     width: 20%;margin-bottom: 5%;
 }
            /*page panier*/
+
 table{
     border-collapse: collapse;width: 95%;margin-left: 2%;
 }
@@ -132,16 +133,16 @@ th{
     background-color: rgb(204, 197, 197);height: 30px;font-size: 1.2rem;
 }
 td{
-    width: 80%;height: 25px;color :rgb(85, 56, 56);font-size: 1.2rem;text-align: center;
+    width: 20%;height: 25px;color :rgb(85, 56, 56);font-size: 1.2rem;text-align: center;
 }
 td, th{
     border:1px solid black;
 } 
 .basket{
-    display: flex;flex-direction: row;width: 100%;padding-bottom: 3%;
+    display: flex;flex-direction: column;width: 100%;padding-bottom: 3%;
 }
 #basket-resume{
-    width: 40%;
+    width: 90%;
 }
 #basket-resume p{
     width: 100%;color:rgb(85, 56, 56);font-size: 1.5rem;font-weight: bold;

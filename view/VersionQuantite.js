@@ -1,8 +1,6 @@
 const produitSell = "teddies";
 const APIURL = "http://localhost:3000/api/" + produitSell + "/";
-
 let idProduit = "";
-
 if (localStorage.getItem("userBasket")) {
   console.log(
     "Contrôle : le panier de l'utilisateur existe déjà dans le localStorage"
@@ -14,9 +12,7 @@ if (localStorage.getItem("userBasket")) {
   let panierInit = [];
   localStorage.setItem("userBasket", JSON.stringify(panierInit));
 }
-
 let userBasket = JSON.parse(localStorage.getItem("userBasket"));
-
 let contact;
 let products = [];
 
@@ -109,7 +105,8 @@ async function productDetails() {
       produitSelected.description;
     document.getElementById("price_product").innerHTML =
       produitSelected.price / 100 + ",00€";
-    console.log(produitSelected.colors); 
+    console.log(produitSelected.colors);
+
   var select = document.getElementById("colorsList");
   var length = select.options.length;
   for (i = length-1; i >= 0; i--) {
@@ -121,20 +118,24 @@ async function productDetails() {
       var option = document.createElement('option');
       option.innerHTML = produitSelected.colors[i];
       // + définition valeur etc....
-      document.getElementById("colorsList").appendChild(option);}
-  
+      document.getElementById("colorsList").appendChild(option);
+    }
 }
  
 function addProduct() {
   // Le produit est mis dans le panier au clic
   let inputBuy = document.getElementById("add_product");
   inputBuy.addEventListener("click", async function () {
-  
+    var quantite = document.getElementById("quantiteProduit").value;
+    let number = {nombreUnite : quantite};
+    console.log(number);
     const produits = await getProducts();
     // Récupérer le panier dans le localStorage et ajouter le produit dans le panier avant renvoi dans le localStorage
-    userBasket.push(produits);
+    const guest = produits;
+    guest.push = {nombreUnite: quantite};
+    userBasket.push(guest);
     localStorage.setItem("userBasket", JSON.stringify(userBasket));
-    console.log("Le produit a été ajouté au panier");
+    console.log("Le produit a été ajouté au panier",(userBasket));
     // Notifier l'utilisateur de l'ajout au panier
     setTimeout(function () {
       document.getElementById("add_case").textContent =
@@ -152,18 +153,17 @@ function commandeProduct() {
   if (JSON.parse(localStorage.getItem("userBasket")).length > 0) {
     // S'il n'est pas vide supprimer le message et créer le tableau récapitulatif
     document.getElementById("empty_basket").remove();
-
     // Structure du tableau
     let facture = document.createElement("table");
     let ligneTableau = document.createElement("tr");
     let colonneNom = document.createElement("th");
     let colonnePrixUnitaire = document.createElement("th");
-
+    let colonneQuantite = document.createElement("th");
+    let colonneTotal = document.createElement("th");
     let ligneTotal = document.createElement("tr");
     let colonneRefTotal = document.createElement("th");
     let colonnePrixPayer = document.createElement("td");
     
-
     // Placer la structure dans la page et le contenu des entêtes
     let factureSection = document.getElementById("basket-resume");
     factureSection.appendChild(facture);
@@ -172,14 +172,21 @@ function commandeProduct() {
     colonneNom.textContent = "Nom du produit";
     ligneTableau.appendChild(colonnePrixUnitaire);
     colonnePrixUnitaire.textContent = "Prix du produit";
+    ligneTableau.appendChild(colonneQuantite);
+    colonneQuantite.textContent = "Quantité";
+    ligneTableau.appendChild(colonneTotal);
+    colonneTotal.textContent = "Total produit";
     let i = 0;
     //dans le tableau produit, incrédentation de chaque ligne de produit avec le nom, le prix
     //et la possibilité de suppression
     JSON.parse(localStorage.getItem("userBasket")).forEach((produit) => {
       // Créer la ligne
+      console.log(produit);
       let ligneProduit = document.createElement("tr");
       let nomProduit = document.createElement("td");
       let prixUnitProduit = document.createElement("td");
+      let quantiteProduit = document.createElement("td");
+      let totalProduit = document.createElement("td");
       let removeProduit = document.createElement("input");
       // Attribuer les classes
       ligneProduit.setAttribute("id", "produit" + i);
@@ -188,15 +195,18 @@ function commandeProduct() {
       removeProduit.addEventListener("click", removeProduct.bind(i));
       i++;
       //sources https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Function/bind//
-
       // Insertion dans le HTML
       facture.appendChild(ligneProduit);
       ligneProduit.appendChild(nomProduit);
       ligneProduit.appendChild(prixUnitProduit);
+      ligneProduit.appendChild(quantiteProduit);
+      ligneProduit.appendChild(totalProduit);
       ligneProduit.appendChild(removeProduit);
       // Remplir le contenu des balises
       nomProduit.innerHTML = produit.name;
       prixUnitProduit.textContent = produit.price / 100 + " €";
+      quantiteProduit.textContent = produit.push.nombreUnite;
+      totalProduit.textContent = (produit.price /100) * (produit.push.nombreUnite);
       removeProduit.type ="button";
       removeProduit.value = "supprimer";
        // Dernière ligne du tableau : Total
@@ -209,7 +219,7 @@ function commandeProduct() {
      // Calcul du montant total
     let totalAPayer = 0;
     JSON.parse(localStorage.getItem("userBasket")).forEach((produit) => {
-       totalAPayer += produit.price / 100;
+      totalAPayer += (produit.price /100) * (produit.push.nombreUnite);
     });
      // Affichage du prix total à payer
     console.log(`Total à payer : ${totalAPayer}€`);
@@ -239,7 +249,7 @@ function checkBasket() {
     alert("Votre panier est vide !");
     return false;
   } else {
-    // Pour chaque produit dans le panier envoyé l'identifiant dans products
+    // Pour chaque produit dans le panier envoyé l'identifiant dans products format du controllers
     JSON.parse(localStorage.getItem("userBasket")).forEach((produit) => {
       products.push(produit._id);
     });
@@ -332,13 +342,12 @@ function resultOrder() {
     let order = JSON.parse(localStorage.getItem("order"));
     document.getElementById("firstName").innerHTML = order.contact.firstName;
     document.getElementById("lastName").innerHTML = order.contact.lastName;
-    // Calculer le montant total de la commande
-    let priceOrder = 0;
-    let displayPrice = order.products;
-    displayPrice.forEach((element) => {
-      priceOrder += element.price / 100;
+    // Afficher le montant total de la commande
+    let totalAPayer = 0;
+    JSON.parse(localStorage.getItem("userBasket")).forEach((produit) => {
+      totalAPayer += (produit.price /100) * (produit.push.nombreUnite);
     });
-    document.getElementById("priceOrder").innerHTML = priceOrder;
+    document.getElementById("priceOrder").innerHTML = totalAPayer;
     document.getElementById("orderId").innerHTML = order.orderId;
     // Remettre à zero le localStorage, products, contact et redirection vers la page d'accueil
     setTimeout(function () {
@@ -366,4 +375,3 @@ function resultOrder() {
     }, 4500);
   }
 }
-
