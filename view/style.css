@@ -91,6 +91,14 @@ nav h2{
 #description p{
     font-size: 1.7rem;
 }
+#description label{
+    margin:0px;
+    margin-left: 2px;
+    margin-bottom: 10px;
+    color:rgb(85, 56, 56);
+    font-size: 1.5rem;
+}
+
 h3{
     text-align:center;font-size: 2rem;font-weight: bold;margin-top: 5%;margin-bottom: 5%; 
 }
@@ -120,8 +128,18 @@ h3{
     border: 3px solid rgb(129, 93, 93);border-radius: 15px;width: 25%;
     margin:auto;
 }
+
 #colorsList{
-    width: 20%;margin-bottom: 5%;
+    width: 20%;margin-bottom: 5%;height:40px;color:rgb(85, 56, 56);background-color: rgb(204, 197, 197);
+}
+
+
+#quantiteProduit{
+    height: 40px;
+    font-size: 1.5rem;
+    width: 20%;
+    margin-right: 5px;
+    background-color: rgb(204, 197, 197);
 }
            /*page panier*/
 
@@ -154,6 +172,10 @@ td, th{
 #formulaire{
     background-color: rgb(204, 197, 197);border-radius: 10px;
 }
+#formulaire label{
+    width: 20%;padding-left: 20%;font-size: 1.2rem;
+}
+
 .formulaire h5{
     width: 100%;color:rgb(85, 56, 56);font-size: 1.5rem;
 }
@@ -168,9 +190,7 @@ td, th{
     border:1px solid rgb(85, 56, 56);box-shadow: 2px 3px 2px rgb(110, 107, 107);
     border-radius: 10px;
 }
-label{
-    width: 20%;padding-left: 20%;font-size: 1.2rem;
-}
+
 #firstName, #lastName{
     width: 50%;height: 25px;margin-left:20%;border-radius: 10px;
 }
@@ -211,7 +231,7 @@ label{
     font-size: 1.2rem;
     text-align: center;
 }
-/*reponsive*/
+                  /*reponsive*/
 @media all and (max-width : 1024px)
 {
     body{
@@ -242,6 +262,24 @@ label{
         width: 300px;height: 200px;
     }
     /*page produit*/
+    #description{
+        display: flex;
+        flex-direction: column;
+    }
+    #description label{
+        width: 70%;
+        font-weight: bold;
+        margin: auto;
+        margin-bottom: 3px;
+    }
+    #description input{
+        width: 40%;
+        margin:auto;
+        background-color: rgb(204, 197, 197);
+        
+        margin-bottom: 15px;
+    }
+
     #photo img{
         width:350px ;height: 250px;
     }
@@ -250,14 +288,18 @@ label{
         flex-direction: column;
         width: 100%;
     }
+    
     #colorsList{
         width: 40%;
-        margin-left:25%;
+        font-size: 1.2rem;
+        margin: auto;
+        
         margin-bottom: 5%;
     }
     #add_product{
         width: 40%;
         margin:auto;
+        margin-top: 15px;
     }
     
     .retour{
